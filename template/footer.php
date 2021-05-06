@@ -5,7 +5,7 @@
     </body>
     <footer>
     <div class="container">
-    <p>copyright: <?php echo $config['app_name']; ?></p>
+         <p>copyright: <?php echo $config['app_name']; ?></p>
     </div>
     </footer>
 </html>
