@@ -2,65 +2,40 @@
 <?php
 $title = 'Home Page';
 require_once 'template/header.php';
+require_once 'includes/uploader.php';
 
-//  اظهار المعلومات في اعلى الصفحة عشان نعرف البيانات -->
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
-   echo "<pre>";
-    print_r($_POST);
-    // print_r($_FILES);
-    echo "</pre>";
+if(isset($_SESSION['contact_form'])){ ?>
+<h1><?php  print_r($_SESSION['contact_form']); ?></h1>
+<?php } ?>
 
-    /* اعداد الملفات المسموح برفعها و نتاكد انه الملف نظيف  */  
-    if(isset($_FILES['document']) && $_FILES['document']['error'] == 0){
-        
-        echo "File is fine";
 
-        /* نوع الملفات المسموح رفعها  */
-        $allowed = [
-           // 'jpg' => 'image/jpeg',
-           // 'png' => 'image/png',
-            //'gif' => 'image/gif'
-            //'doc' => 'document/doc'
-        ];
-
-        $fileType = $_FILES['document']['type'];
-        echo $fileType;
-
-        $fileMimeType = mime_content_type($_FILES['document']['tmp_name']);
-
-        echo $fileMimeType;
-        
-
-        $maxFileSize = 10 * 1024;
-        $fileSize=$_FILES['document']['size'];
-
-        if(!in_array($fileType,$allowed)) die('File type not allowed');
-        
-        if($fileSize > $maxFileSize) die('File size not allowed'. $maxFileSize);
-        
-        
-    }
-}
-?>
 <!-- create form contact -->
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label for="name">your name</label>
-        <input type="text" name="name" class="form-control" placeholder="your name"></input>
+        <label class="font-weight-bold" for="name">Name</label>
+        <input type="text" name="name"  value="<?php if(isset($_SESSION['contact_form']['name'])) echo $_SESSION['contact_form']['name'] ?>" class="form-control" placeholder="your name"></input>
+        <span class="text-danger"><?php echo $nameError ?></span>
     </div>
     <div class="form-group">
         <label for="email">your email</label>
-        <input type="email" name="email" class="form-control" placeholder="your name"></input>
+        <input type="email" name="email" value="<?php if(isset($_SESSION['contact_form']['email'])) echo $_SESSION['contact_form']['email'] ?>" class="form-control" placeholder="your email"></input>
+        <span class="text-danger"><?php echo $emailError ?></span>
     </div>
     <div class="form-group">
         <label for="document">your document</label>
         <input type="file" name="document">
+        <span class="text-danger"><?php echo $documentError ?></span>
     </div>
 
     <div class="form-group">
-        <label for="message">your name</label>
-        <textarea name="message" class="form-control" placeholder="your name"></textarea>
+        <label for="message">your message</label>
+        <textarea name="message" class="form-control" placeholder="your message"><?php if(isset($_SESSION['contact_form']['message'])) echo $_SESSION['contact_form']['message'] ?></textarea>
+        <span class="text-danger"><?php echo $messageError ?></span>
     </div>
+  
+    
+   
+   
     <button class="btn btn-primary">send</button>
 </form>
 
