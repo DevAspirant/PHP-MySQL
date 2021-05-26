@@ -1,3 +1,4 @@
+ <!-- هذا الملف خاص بنوع البينات الي راح ترتفع للسيرفر -->
 <?php 
 /* فلترة النصوص لمنع الحقن */
     function filterString($field){
@@ -111,10 +112,24 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     /* مسح بيانات المتغيرات في حالة كانت جميع العمليات صحيحة  */
 
     if(!$nameError && !$emailError && !$messageError && !$documentError){ 
-        // unset($_SESSION['contact_form']); مسح بيانات المتغيرات في الجلسة 
-        echo '<p class="text-success">message has been sent</p>';
-        session_destroy(); // حذف كل البيانات من الجلسة 
-        header('Location: https://google.com'); // redirect the page
-        die();
+        // header الخاص بالايميل
+        $headers = 'MIME-Version: 1.0' . "\r\n";
+        $headers .='Content-type: text/html;charset=UTF-8' . "\r\n";
+        $headers .='From: '.$email."\r\n" . 'Replay-To'.$email."\r\n".'X-Mailer: PHP/'.phpversion();
+
+        $htmlMessage = '<html><body>';
+        $htmlMessage .= '<p style="color:#ff0000;">'.$message.'</p>';
+        $htmlMessage .='</body></html>';
+
+
+        if(mail($config['admin_email'],'you have new message',$message)){
+             // unset($_SESSION['contact_form']); مسح بيانات المتغيرات في الجلسة 
+             echo '<p class="text-success">message has been sent</p>';
+             session_destroy(); // حذف كل البيانات من الجلسة 
+             header('Location:http://localhost/php/php-startkit/'); // redirect the page
+            die();
+        }else{
+            echo 'Error sending message';
+        }
     }
 }

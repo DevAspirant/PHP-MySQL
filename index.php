@@ -4,6 +4,14 @@ $title = 'Home Page';
 require_once 'template/header.php';
 require_once 'includes/uploader.php';
 
+// عمل الكوكيز و تحديد قيمتها و وقتها
+setcookie('username','Ammar',time()+30*24*60*60);
+// مسح الكوكيز بعد ساعة 
+setcookie('usename','Ammar',time()-3600);
+
+// الحصول على الكوكيز
+if(isset($_COOKIE['username'])) echo "HELLO " . $_COOKIE['username'];
+// طباعة معلومات الجلسة المخزنة في السيرفر
 if(isset($_SESSION['contact_form'])){ ?>
 <h1><?php  print_r($_SESSION['contact_form']); ?></h1>
 <?php } ?>
