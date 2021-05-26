@@ -28,7 +28,7 @@ ini_set('display_errors',1);
         <![endif]-->
         <div class="container">
 
-                <!-- اظهار نتائج الطلب -->
+ <!-- اظهار نتائج الطلب -->
 <div class="card border border-success fixed-top" style="width: 18rem;">
   <div class="card-body">
   <h5 class="card-title text-success">POST REQUEST : Result</h5>
