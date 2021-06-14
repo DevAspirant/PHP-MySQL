@@ -1,6 +1,6 @@
 ## PHP-MySQL-
 This is a tutorial source code from flexcourses PHP and MySQL course
-
+The branch version will be the same with the lecture number
  
 
 ## Steps 
